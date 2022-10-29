@@ -1,4 +1,4 @@
-# utc_utils
+# utc_java
 
 ## Working with UTC date time using Java  <img alt="tick" src="./assets/images/globe.svg" width=10%>
 
@@ -14,7 +14,7 @@ These are some working java functions that I use when working with UTC and Java.
 
     The following files could run in any java ide:
         JUnit will need to be installed and included in the classpath in order to run the junit tests.
-        Add dependency to handle JSONObjects
+        Add gradle dependency to handle JSONObjects
 
     1. UtcUtils.java     java class with time functions  
     2. UtcUtilsTest      junit tests 
