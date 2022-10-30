@@ -1,11 +1,11 @@
-# utc_java
+# UTC_Java
 
 ## Working with UTC date time using Java  <img alt="tick" src="./assets/images/globe.svg" width=10%>
 
 Over the years, I've been working on dates and times using different computer languages. 
 Sometimes, the date times were stored as ___local times___, other times as UTC. There are advantages and disadvantages with both methods.
 
-These are some working java functions that I use when working with UTC and Java.
+These are some working java code that  I use when working with UTC and Java.
 
 
 
@@ -16,7 +16,7 @@ These are some working java functions that I use when working with UTC and Java.
         JUnit will need to be installed and included in the classpath in order to run the junit tests.
         Add gradle dependency to handle JSONObjects
 
-    1. UtcUtils.java     java class with time functions  
+    1. UtcUtils.java     java class with time methods  
     2. UtcUtilsTest      junit tests 
 ## About me
 
@@ -37,7 +37,7 @@ This is my contribution to the community.
 
 ## License
 
-The code in the Java functions is readily available on the internet. Use it as you wish.    <img alt="tick" src="./assets/images/check-mark_2714-fe0f.png" width=4%>
+The code in the Java classs is readily available on the internet. Use it as you wish.    <img alt="tick" src="./assets/images/check-mark_2714-fe0f.png" width=4%>
 
 
 ## Background to UTC
