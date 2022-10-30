@@ -1,4 +1,4 @@
-# UTC_Java
+# UTC and Java
 
 ## Working with UTC date time using Java  <img alt="tick" src="./assets/images/globe.svg" width=10%>
 
