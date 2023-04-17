@@ -8,6 +8,7 @@ import java.time.ZoneId;
 import java.time.zone.ZoneRulesException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -187,6 +188,37 @@ class UtcUtilsTest {
             }
         }
     }
+
+    /**
+     * display all java zoneids and time offsets using a Map<String, String>
+     */
+    @Test
+    void getTimeZoneIds_offsets_MAP() {
+        String[] arrayTimeZones = utcUtils.getTimeZoneIds();
+//        comment in or out as required
+        int j = 0;
+        for (String zoneIdString : arrayTimeZones) {
+            try {
+                ZoneId zoneid = ZoneId.of(zoneIdString);
+                String actualValue = utcUtils.convertInstantToZDT(inputValue, zoneid);
+
+                Map<String, String> map = utcUtils.getRegex_map(actualValue);
+                if (map!= null){  // valid return
+                    String name =  map.get("name");
+                    String offset = map.get("offset");
+                    String isZuluTime = map.get("Zulu");
+
+                    System.out.printf("Map  #: %3d %35s %s    Zulu %s\n", ++j, name, offset, isZuluTime);
+                } else {
+                    System.out.println("Error: null value returned for  " + inputValue + " , zoneid = " + zoneid);
+                }
+            } catch (ZoneRulesException zre) {
+                System.out.println("ZoneRulesException for " + zoneIdString + " , " + zre.getMessage());
+            }
+        }
+    }
+
+
 
     @Test
     void getUtcInstant_now() {

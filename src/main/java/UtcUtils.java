@@ -7,6 +7,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import java.time.zone.ZoneRulesException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,11 +40,16 @@ public class UtcUtils {
      * @param zoneid
      * @return string utc time, offset (in this case +01:00, and locale)  "2022-10-15T10:45+01:00[Europe/Dublin]"
      */
-    public static String convertInstantToZDT(String iso8601String, ZoneId zoneid) {
-        Instant instant = Instant.parse(iso8601String);
-        ZonedDateTime defaultTime = instant.atZone(zoneid);
-
-        return String.valueOf(defaultTime);
+    public static String convertInstantToZDT(String iso8601String, ZoneId zoneid)  {
+        try{
+            Instant instant = Instant.parse(iso8601String);
+            ZonedDateTime defaultTime = instant.atZone(zoneid);
+            return String.valueOf(defaultTime);
+        } catch (DateTimeParseException dtpe) {
+            return "DateTimeParseException" + dtpe.getMessage();
+        } catch (ZoneRulesException zre) {
+            return "ZoneRulesException" + zre.getMessage();
+        }
     }
 
     public static LocalDateTime createLocalDateTime(String dateTimeString) {
@@ -76,6 +82,17 @@ public class UtcUtils {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         return dateFormat.format(date);
+    }
+
+    public static ZoneId getZoneId(String zoneIdString) {
+        try {
+            ZoneId zoneid = ZoneId.of(zoneIdString);
+            return zoneid;
+        } catch (DateTimeException dte){
+            System.out.println("DateTimeException" + dte.getMessage());
+        }
+
+        return null;
     }
 
     /**
@@ -223,5 +240,53 @@ public class UtcUtils {
             return jsonObject.toString();
         }
         return "no regex match: " + searchString;
+    }
+
+    /**
+     * take a date time string ,
+     * separate name and offset using regex pattern,
+     * reformat and return a map of strings
+     *
+     * @param searchString  e.g. 2022-10-15T09:45Z[Africa/Abidjan]
+     * @return Map containing name, offset and zulu as strings:
+     *          "[Africa/Abidjan]"
+     *          "+09:45Z"
+     *          "true"
+     *
+     */
+    public Map<String, String> getRegex_map(String searchString) {
+//  regex match +00:00, -00:00 or 00:00Z
+        Pattern p = Pattern.compile("(([-+]\\d{2}:\\d{2}|\\d{2}:\\d{2}Z))(\\[.*\\])");
+        Matcher matcher = p.matcher(searchString);
+
+        if (matcher.find()) {
+            String g0 = matcher.group(0);
+            String g1 = matcher.group(1);
+            String g2 = matcher.group(2);
+            String g3 = matcher.group(3);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", g3);
+            jsonObject.put("offset", g2);
+
+            if (g2.contains("Z")) {
+                jsonObject.put("Zulu", true);
+            } else {
+                jsonObject.put("Zulu", false);
+            }
+
+            Map<String, String> map = new HashMap<>();
+
+            map.put("name", g3);
+            map.put("offset", g2);
+            if (g2.contains("Z")) {
+                map.put("Zulu", "true");
+            } else {
+                map.put("Zulu", "false");
+            }
+
+            return map;
+        }
+        return null;
     }
 }

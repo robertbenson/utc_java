@@ -1,12 +1,11 @@
 # UTC and Java
 
-## Working with UTC date time using Java  <img alt="tick" src="./assets/images/globe.svg" width=10%>
+## Working with UTC date time using Java <img alt="tick" src="./assets/images/globe.svg" width=10%>
 
 Over the years, I've been working on dates and times using different computer languages. 
 Sometimes, the date times were stored as ___local times___, other times as UTC. There are advantages and disadvantages with both methods.
 
-These are some working java code that  I use when working with UTC and Java.
-
+This is typical Java code that I would use when working with UTC and Java.
 
 
 
@@ -16,7 +15,7 @@ These are some working java code that  I use when working with UTC and Java.
         JUnit will need to be installed and included in the classpath in order to run the junit tests.
         Add gradle dependency to handle JSONObjects
 
-    1. UtcUtils.java     java class with time methods  
+    1. UtcUtils.java     java class with date time methods  
     2. UtcUtilsTest      junit tests 
 ## About me
 
@@ -33,7 +32,6 @@ One of the party asked, did Spain also have a DST time change that weekend ? and
 
 Millions of date time computer transactions happen every day, using UTC to deal with scenarios like this. 
 
-This is my contribution to the community.
 
 ## License
 
@@ -69,7 +67,7 @@ map of UTC zones by wikipedia
 There are many timezones around the world. Some have regional variations e.g. daylight saving time. This can make using times confusing.
 
 UTC is the **primary global** standard, adopted by the scientific community, it's the same time everywhere, no regional variations, no daylight saving time changes.
-6pm UTC in New York is 6PM UTC in Australia.
+6pm UTC in New York is 6pm UTC in Australia.
 
 _Time Zones_ are geographical areas of the world, delimited by longitude, that observe UTC time, but with or without a regional variation.
 GMT is a time zone, but not all countries in a region observe the same time and may be observing daylight saving time.
@@ -160,7 +158,10 @@ has a local time in Kiritimati of:
 While the _world_ operates on UTC time, displaying the UTC time back to the user in the majority of situations will not be helpful or desireable.
 It will need to be converted back to time zones, that may be using daylight saving time.
 
-Converting back from UTC to local time needs a time zone and its associated offset.
+Converting back from UTC to local time needs a time zone and its associated offset. What is local to the developer, may not be local to where the
+data is stored and processed. It is not unusual for data to be stored and processed offsite, possibly in a different country. For this reason, the offset in minutes
+may be stored with the date time. 
+
 
 These are just an example of some java time zone id's, at time of writing there are 628.
 
@@ -268,7 +269,8 @@ This is an example regex that I use to locate _±00:00_ and _00:00Z_ string patt
 see in action on [regex101.com][9]
 
 ## Return a JSON String
-### JSONObject, create
+The following are code snippets. The full code is available in the Java classes.
+### JSONObject, create 
 
 ```
    JSONObject jsonObject = new JSONObject();
@@ -302,7 +304,7 @@ an example jsonObject string:
    String offset = (String) utcJSON.get("offset");
    Boolean isZuluTime = (Boolean) utcJSON.get("Zulu");
    
-   ```
+   ```c
 
 
 
