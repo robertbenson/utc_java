@@ -32,6 +32,24 @@ One of the party asked, did Spain also have a DST time change that weekend ? and
 
 Millions of date time computer transactions happen every day, using UTC to deal with scenarios like this. 
 
+## Store Date/Time as local time or UTC ?
+
+Whether you should store date and time in UTC (Coordinated Universal Time) or local time depends on your specific use case and requirements. Here are some considerations for each option:
+
+1. **UTC (Coordinated Universal Time):**
+   - **Consistency:** UTC is a standardized time that doesn't observe daylight saving time or time zone changes making it consistent and reliable for international applications and databases.
+   - **Global Operations:** If the application is used across different time zones or locations, storing data in UTC can simplify time calculations and prevent confusion.
+   - **Data Integrity:** Storing data in UTC can help maintain data integrity, as local time changes due to daylight saving time transitions or changes in time zones won't affect the stored values.
+
+2. **Local Time:**
+   - **User Experience:** If the application is primarily used in a specific time zone or region, storing data in local time can provide a more intuitive user experience.
+   - **Contextual Information:** In some cases, it may be important to capture the local time to provide context or details about when an event occurred in a particular location.
+   - **Complexity Reduction:** For simple applications that don't need to deal with time zone conversions, storing data in local time might be simpler.
+
+In many cases, a hybrid approach can be beneficial. Store timestamps in UTC to ensure consistency and global compatibility, but also store the corresponding time zone information or user preferences. This allows you to display times in local time when needed, based on the user's location or preferences.
+
+Ultimately, the choice between UTC and local time should align with your application's requirements, user base, and the potential need for internationalization. It's also important to consider how you handle time zone conversions and daylight saving time transitions when presenting the data to users or performing calculations.
+
 
 ## License
 
